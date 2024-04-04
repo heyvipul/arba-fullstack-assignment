@@ -1,38 +1,59 @@
-.App {
-  text-align: center;
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+    color: rgb(0,171,197);
+    align-items: center;
+}
+.navbar button{
+    color: white;
+    font-weight: bold;
+    background-color: rgb(0,171,197);
+    border: none;
+    width: 80px;
+    cursor: pointer;
+    padding: 5px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar > div{
+    display: flex;
+    font-size: 26px;
+    gap: 24px;
+    color: rgb(0,171,197);
+    cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.login-div{
+    display: flex;
+    border: 1px solid red;
+    /* justify-content: space-between; */
+    width: 60%;
+    margin: auto;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.login-div > div{
+    display: flex;
+    border: 1px solid red;
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 60px;
 }
-
-.App-link {
-  color: #61dafb;
+.login-div > div > input{
+    padding: 5px;
+    padding-bottom: 2px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid rgb(0,171,197);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-div > div > button{
+    padding: 5px;
+    color: white;
+    background-color:rgb(0,171,197) ;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
