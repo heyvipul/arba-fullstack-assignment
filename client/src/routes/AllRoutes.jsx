@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route,Routes} from "react-router-dom"
+import {Route,Router,Routes} from "react-router-dom"
 import Home from '../pages/Home'
 import LoginPage from '../pages/LoginPage'
 import Cart from '../pages/Cart'
@@ -8,7 +8,7 @@ import Profile from '../pages/Profile'
 import PrivateRoutes from './PrivateRoutes'
 
 const AllRoutes = () => {
-  return (
+  return (  
     <Routes>
       <Route path='/' element={<PrivateRoutes><Home/></PrivateRoutes>} />
       <Route path='/login' element={<LoginPage/>} />

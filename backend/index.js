@@ -4,7 +4,8 @@ const bcrypt = require("bcryptjs")
 const cors = require("cors");
 var cookieParser = require('cookie-parser')
 const User = require("./models/User");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const productRouter = require("./routes/productRouter");
 require("dotenv").config();
 const PORT = process.env.PORT || 9000;
 const MONGODB_URL = process.env.MONGODB_URL
@@ -40,7 +41,6 @@ app.post("/register", async (req, res) => {
             userName,
             email,
             password: hashedPassword,
-            avatar
         });
         res.send({message : "user register", user :userDoc});
     } catch (error) {
@@ -69,6 +69,7 @@ app.post("/login",async(req,res)=>{
     }
 })
 
+app.use('/products', productRouter);
 
 app.listen(PORT,()=>{
     console.log(`server is running on ${PORT}`);
