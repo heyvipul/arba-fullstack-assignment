@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser')
 const User = require("./models/User");
 const jwt = require("jsonwebtoken");
 const productRouter = require("./routes/productRouter");
+const Category = require("./routes/Category")
 require("dotenv").config();
 const PORT = process.env.PORT || 9000;
 const MONGODB_URL = process.env.MONGODB_URL
@@ -70,6 +71,7 @@ app.post("/login",async(req,res)=>{
 })
 
 app.use('/products', productRouter);
+app.use('/category', Category);
 
 app.listen(PORT,()=>{
     console.log(`server is running on ${PORT}`);
