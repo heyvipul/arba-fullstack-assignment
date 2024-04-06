@@ -21,7 +21,7 @@ const MyStore = () => {
     const handleAddProduct = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://arba-backend-j9r7.onrender.com/products', {
+            const response = await fetch('https://arba-backend-1-z79g.onrender.com/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

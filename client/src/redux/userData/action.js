@@ -3,7 +3,7 @@ export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_SIGNUP = "USER_SIGNUP"
-const api = "https://arba-backend-j9r7.onrender.com"
+const api = "https://arba-backend-1-z79g.onrender.com"
 const token = "dfhkcjknxykesjhiuvcnkesdd"
 
 

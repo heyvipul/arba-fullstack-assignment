@@ -7,6 +7,14 @@ const Profile = () => {
   const [login, setLogin] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const { isAuthenticated } = useSelector((store) => store.userReducer);
+  const [showPopup, setshowPopup] = useState(false)
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const signupDetails = JSON.parse(localStorage.getItem("signup"));
+  if(signupDetails){
+    var { fullName, email } = signupDetails;
+  }
 
   const handleAccept = () => {
     localStorage.setItem('hasAccepted', true);
@@ -21,17 +29,46 @@ const Profile = () => {
     setShowDialog(true);
   };
 
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    try {
+      if (newPassword !== confirmNewPassword) {
+        return alert("New password and confirm password do not match!");
+      }
+      const response = await fetch(`https://arba-backend-1-z79g.onrender.com/user/${email}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+      const data = await response.json();
+      alert("Password chanage successfully!");
+      setshowPopup(false)
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+    } catch (error) {
+      console.error("Error updating password:", error);
+      alert("Failed to update password. Please try again.");
+      setshowPopup(false)
+    }
+  };
+
   if (isAuthenticated) {
     return (
       <>
         <div className='profile-div'>
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-YwrVVjOv028wj9HZ_0_GUizZdQhoxB_C2Q_0yfYgA&s" alt="" />
-          <h4 style={{ marginBottom: "-15px" }}>User 1</h4>
+          <h4 style={{ marginBottom: "-15px" }}>{fullName || "User1"}</h4>
           <p>Lorem ipsum dolor sit amet.</p>
           <button>Update Profile</button>
           <div>
             <button onClick={handleSeeTC}>See T&C</button>
-            <button>Change Password</button>
+            <button onClick={() => setshowPopup(true)}>Change Password</button>
           </div>
         </div>
         {showDialog && (
@@ -50,6 +87,38 @@ const Profile = () => {
               </div>
             </div>
           </>
+        )}
+        {showPopup && (
+          <React.Fragment>
+            <div className='backdrop' ></div>
+            <div className='store-add-div'>
+              <form onSubmit={handleChangePassword}>
+                <h2>Change Password</h2>
+                <input
+                  type="password"
+                  placeholder="Current Password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Confirm New Password"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                />
+                <button type="submit">Change Password</button>
+              </form>
+              <div>
+                <button style={{ marginTop: "20px", cursor: "pointer", backgroundColor: "rgb(0, 171, 197)", border: "none", color: "white", fontWeight: "bold" }} onClick={() => setshowPopup(false)}>Cancel</button>
+              </div>
+            </div>
+          </React.Fragment>
         )}
       </>
     );

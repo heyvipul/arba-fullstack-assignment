@@ -5,11 +5,12 @@ const Product = require("../models/Product");
 
 router.post('/', async (req, res) => {
   try {
-    const product = new Product(req.body);
+    const { avatar, title, description, Price } = req.body;
+    const product = new Product({ avatar, title, description, Price });
     await product.save();
     res.status(201).json(product);
   } catch (error) {
-    console.error(error);
+    console.error('Error saving product:', error);
     res.status(500).json({ message: 'Server Error' });
   }
 });
