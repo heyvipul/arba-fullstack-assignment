@@ -158,7 +158,7 @@ const Home = () => {
                   {/* <button onClick={() => removeFromCart(index)}> - </button>
                   <span>{cart[index]}</span>
                   <button onClick={() => addToCart(index)}> + </button> */}
-                  <button><span style={{paddingRight:"50px"}} onClick={() => removeFromCart(index)}>-</span>{cart[index]}<span style={{paddingLeft:"50px"}} onClick={() => addToCart(index)}>+</span></button>
+                  <button><span style={{ paddingRight: "50px" }} onClick={() => removeFromCart(index)}>-</span>{cart[index]}<span style={{ paddingLeft: "50px" }} onClick={() => addToCart(index)}>+</span></button>
                 </div>
               ) : (
                 <button onClick={() => addToCart(index)}>Add to Cart</button>
@@ -174,7 +174,10 @@ const Home = () => {
         flexDirection: "row-reverse"
       }}>
         <Link to={"/products"}>
-          <button style={{
+          <button onClick={window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })} style={{
             padding: "6px",
             backgroundColor: "rgb(0,171,197)",
             border: "none",
