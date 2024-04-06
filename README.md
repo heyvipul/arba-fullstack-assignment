@@ -69,6 +69,15 @@ Technologies used in the project:
 *   cors
 *   bcrypt
 
+### aap endpoints 
+```
+/register - for signup
+/login - for login
+/update/:id - for updating user data
+/changepassword/:id - for Change Password
+```
+
+
 <h2>🛡️ License:</h2>
 
 This project is licensed under the heyvipul
