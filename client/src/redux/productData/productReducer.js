@@ -1,4 +1,4 @@
-import { GET_PRODUCT_REQUEST, GET_PRODUCT_SUCCESS } from "./action"
+import { DELETE_PRODUCT, GET_PRODUCT_REQUEST, GET_PRODUCT_SUCCESS } from "./action"
 
 const initialState = {
     isLoading : true,
@@ -12,6 +12,9 @@ export const productReducer = (state = initialState,{type,payload}) =>{
         }
         case GET_PRODUCT_SUCCESS : return {
             ...state, isLoading : false, products : payload
+        }
+        case DELETE_PRODUCT : return {
+            ...state,products : payload
         }
         default : return state
     }
