@@ -69,6 +69,23 @@ Technologies used in the project:
 *   cors
 *   bcrypt
 
+### project endpoints 
+```
+/register - for signup
+/login - for login
+/update/:id - for updating user data
+/changepassword/:id - for Change Password
+/products/ - for getting all the product data
+/products/ - for posting product data : post method
+/products/:id - for updating product
+/products/:id - for delete product
+/category/ - for getting all the category data
+/category/ - for posting category data : post method
+/category/:id - for updating category
+/category/:id - for delete category
+```
+
+
 <h2>🛡️ License:</h2>
 
 This project is licensed under the heyvipul
