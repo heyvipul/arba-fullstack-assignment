@@ -53,6 +53,13 @@ const Home = () => {
     dispatch(getProduct())
   }, [])
 
+  function scrolltoTop(){
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
   console.log(products);
 
   return (
@@ -174,10 +181,8 @@ const Home = () => {
         flexDirection: "row-reverse"
       }}>
         <Link to={"/products"}>
-          <button onClick={window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          })} style={{
+          <button onClick={scrolltoTop}
+          style={{
             padding: "6px",
             backgroundColor: "rgb(0,171,197)",
             border: "none",
