@@ -24,7 +24,7 @@ const MyStore = () => {
     const handleAddProduct = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8000/products', {
+            const response = await fetch('https://arba-backend-1-z79g.onrender.com/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -56,6 +56,7 @@ const MyStore = () => {
 
     function handleDeletee(id) {
         dispatch(handleDelete(id));
+        console.log(id);
         setTimeout(() => {
             toast.success("Product deleted successfully")
             window.location.reload()

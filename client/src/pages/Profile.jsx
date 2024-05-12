@@ -35,10 +35,10 @@ const Profile = () => {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     try {
-      if (newPassword !== confirmNewPassword) {
-        return toast.error("New password and confirm password do not match!");
+      if (newPassword !== confirmNewPassword || newPassword === "" || currentPassword === ""  ) {
+        return toast.error("Password not match!");
       }
-      const response = await fetch(`http://localhost:8000/user/${id}`, {
+      const response = await fetch(`https://arba-backend-1-z79g.onrender.com/user/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

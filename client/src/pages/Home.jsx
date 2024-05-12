@@ -80,12 +80,6 @@ const Home = () => {
     })
   }
 
-  // if(isLoading){
-  //   return <>
-
-  //   </>
-  // }
-
 
   return (
     <>

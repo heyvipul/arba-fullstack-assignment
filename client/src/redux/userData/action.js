@@ -4,12 +4,10 @@ export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_SIGNUP = "USER_SIGNUP"
 
-// const api = "https://arba-backend-1-z79g.onrender.com"
-const api = "http://localhost:8000"
 
 export const handleLogin = ({ userName, password}) => async (dispatch) => {
   try {
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch("https://arba-backend-1-z79g.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +43,7 @@ export const handleLogin = ({ userName, password}) => async (dispatch) => {
 
 export const handleSignup = ({ fullName, userName, email, password }) => async (dispatch) => {
   try {
-    const response = await fetch(`${api}/register`, {
+    const response = await fetch(`https://arba-backend-1-z79g.onrender.com/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
