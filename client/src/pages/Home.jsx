@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Carousel from "react-simply-carousel";
 import { getProduct } from '../redux/productData/action';
 import { Link, useNavigate } from 'react-router-dom';
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 const Home = () => {
 
@@ -11,24 +12,43 @@ const Home = () => {
   const { isLoading, products } = useSelector((store) => store.productReducer)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState([]);
+  const [newCart, setNewCart] = useState([])
+  const initialCart = JSON.parse(localStorage.getItem('cart')) || {};
+
+  console.log(isLoading);
+
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(newCart));
+  }, [newCart]);
+
 
   // Function to handle adding product to the cart
-  const addToCart = (productId) => {
+  const addToCart = (ele, productId) => {
     setCart(prevCart => ({
       ...prevCart,
       [productId]: (prevCart[productId] || 0) + 1
     }));
+    setNewCart(prevCart => [...prevCart, ele]);
   };
 
   // Function to handle removing product from the cart
-  const removeFromCart = (productId) => {
+  const removeFromCart = (eleId, productId) => {
     setCart(prevCart => {
       const updatedCart = { ...prevCart };
       if (updatedCart[productId] && updatedCart[productId] > 0) {
         updatedCart[productId]--;
       }
       return updatedCart;
+    });
+    setNewCart(prevCart => {
+      const newupdatedCart = [...prevCart];
+      const index = newupdatedCart.findIndex(item => item.id === eleId);
+      if (index !== -1) {
+        newupdatedCart.splice(index, 1);
+      }
+      return newupdatedCart;
     });
   };
 
@@ -53,14 +73,19 @@ const Home = () => {
     dispatch(getProduct())
   }, [])
 
-  function scrolltoTop(){
+  function scrolltoTop() {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })
   }
 
-  console.log(products);
+  // if(isLoading){
+  //   return <>
+
+  //   </>
+  // }
+
 
   return (
     <>
@@ -152,7 +177,17 @@ const Home = () => {
       <br />
       <h2 style={{ width: "80%", margin: "auto" }}>Products</h2>
       <br />
-      <div className='products-div'>
+
+      {
+        isLoading ? <div className='loading-div'>
+        <PropagateLoader
+          color={"rgb(0,171,197)"}
+          loading={isLoading}
+          size={25}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+        </div> : <div className='products-div'>
         {products?.map(function (ele, index) {
           return <div key={index}>
             <img src={ele.avatar} alt="" />
@@ -162,18 +197,19 @@ const Home = () => {
               <p style={{ color: "rgb(0, 171, 197)", fontWeight: "bold" }}>RS. {ele.Price}</p>
               {cart[index] ? (
                 <div>
-                  {/* <button onClick={() => removeFromCart(index)}> - </button>
-                  <span>{cart[index]}</span>
-                  <button onClick={() => addToCart(index)}> + </button> */}
-                  <button><span style={{ paddingRight: "50px" }} onClick={() => removeFromCart(index)}>-</span>{cart[index]}<span style={{ paddingLeft: "50px" }} onClick={() => addToCart(index)}>+</span></button>
+
+                  <button><span style={{ paddingRight: "50px" }} onClick={() => removeFromCart(ele.id, index)}>-</span>{cart[index]}<span style={{ paddingLeft: "50px" }} onClick={() => addToCart(index)}>+</span></button>
                 </div>
               ) : (
-                <button onClick={() => addToCart(index)}>Add to Cart</button>
+                <button onClick={() => addToCart(ele, index)}>Add to Cart</button>
               )}
             </div>
           </div>
         })}
       </div>
+      }
+
+  
       <div style={{
         display: "flex",
         width: "65%",
@@ -182,14 +218,14 @@ const Home = () => {
       }}>
         <Link to={"/products"}>
           <button onClick={scrolltoTop}
-          style={{
-            padding: "6px",
-            backgroundColor: "rgb(0,171,197)",
-            border: "none",
-            color: "white",
-            fontWeight: "bold",
-            cursor: "pointer"
-          }}>All Products >></button>
+            style={{
+              padding: "6px",
+              backgroundColor: "rgb(0,171,197)",
+              border: "none",
+              color: "white",
+              fontWeight: "bold",
+              cursor: "pointer"
+            }}>All Products >></button>
         </Link>
       </div>
       <br />

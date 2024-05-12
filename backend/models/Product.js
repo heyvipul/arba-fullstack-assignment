@@ -16,16 +16,16 @@ const productSchema = new mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
-    
+
   },
-  image: {
+  avatar: {
     type: String,
-  
+    default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-YwrVVjOv028wj9HZ_0_GUizZdQhoxB_C2Q_0yfYgA&s"
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
- 
+
   }
 });
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { useSelector } from 'react-redux';
+import toast, { Toaster } from "react-hot-toast"
+
 
 const Profile = () => {
   const [login, setLogin] = useState(false);
@@ -11,9 +13,10 @@ const Profile = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const signupDetails = JSON.parse(localStorage.getItem("signup"));
-  if(signupDetails){
-    var { fullName, email } = signupDetails;
+  const signupDetails = JSON.parse(localStorage.getItem("signup")) || null;;
+  // console.log(signupDetails);
+  if (signupDetails) {
+    var { userName, email, id } = signupDetails;
   }
 
   const handleAccept = () => {
@@ -33,9 +36,9 @@ const Profile = () => {
     e.preventDefault();
     try {
       if (newPassword !== confirmNewPassword) {
-        return alert("New password and confirm password do not match!");
+        return toast.error("New password and confirm password do not match!");
       }
-      const response = await fetch(`https://arba-backend-1-z79g.onrender.com/user/${email}`, {
+      const response = await fetch(`http://localhost:8000/user/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -45,26 +48,26 @@ const Profile = () => {
           newPassword,
         }),
       });
-      const data = await response.json();
-      alert("Password chanage successfully!");
+      toast.success("Password change successfully!");
       setshowPopup(false)
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
     } catch (error) {
       console.error("Error updating password:", error);
-      alert("Failed to update password. Please try again.");
+      toast.error("Failed to update password. Please try again.");
       setshowPopup(false)
     }
   };
 
-  if (isAuthenticated) {
+  if (isAuthenticated && signupDetails) {
     return (
       <>
+        <Toaster />
         <div className='profile-div'>
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-YwrVVjOv028wj9HZ_0_GUizZdQhoxB_C2Q_0yfYgA&s" alt="" />
-          <h4 style={{ marginBottom: "-15px" }}>{fullName || "User1"}</h4>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <h4 style={{ marginBottom: "-15px" }}>{userName || "User"}</h4>
+          <p>{email || "user@gmail.com"}</p>
           <button>Update Profile</button>
           <div>
             <button onClick={handleSeeTC}>See T&C</button>
@@ -112,7 +115,14 @@ const Profile = () => {
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                 />
-                <button type="submit">Change Password</button>
+                <button style={{
+                  padding: "6px",
+                  backgroundColor: "rgb(0,171,197)",
+                  border: "none",
+                  color: "white",
+                  fontWeight: "bold",
+                  cursor: "pointer"
+                }} type="submit">Change Password</button>
               </form>
               <div>
                 <button style={{ marginTop: "20px", cursor: "pointer", backgroundColor: "rgb(0, 171, 197)", border: "none", color: "white", fontWeight: "bold" }} onClick={() => setshowPopup(false)}>Cancel</button>
@@ -124,7 +134,7 @@ const Profile = () => {
     );
   }
 
-  return (
+  else return (
     <>
       {login ? <Signup login={login} setLogin={setLogin} /> : <Login login={login} setLogin={setLogin} />}
     </>

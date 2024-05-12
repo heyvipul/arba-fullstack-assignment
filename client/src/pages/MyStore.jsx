@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct, handleDelete } from '../redux/productData/action';
+import PropagateLoader from "react-spinners/PropagateLoader";
+import toast, { Toaster } from "react-hot-toast"
+
 
 const MyStore = () => {
     const { isLoading, products } = useSelector((store) => store.productReducer)
@@ -21,7 +24,7 @@ const MyStore = () => {
     const handleAddProduct = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://arba-backend-1-z79g.onrender.com/products', {
+            const response = await fetch('http://localhost:8000/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -35,18 +38,17 @@ const MyStore = () => {
             });
             const data = await response.json();
             setshowPopup(false)
-            alert('Product added successfully');
+            toast.success('Product added successfully');
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000);
 
         } catch (error) {
             console.error('Error adding product:', error);
-            alert('Error in adding product');
+            toast.error('Error in adding product');
             setshowPopup(false)
         }
     };
-
-
-    console.log(products);
-
 
     useEffect(() => {
         dispatch(getProduct())
@@ -55,8 +57,13 @@ const MyStore = () => {
     function handleDeletee(id) {
         dispatch(handleDelete(id));
         setTimeout(() => {
+            toast.success("Product deleted successfully")
             window.location.reload()
         }, 2000);
+    }
+
+    function handleEdit() {
+        return toast.error("Something went wrong!")
     }
 
 
@@ -64,13 +71,14 @@ const MyStore = () => {
         <>
             <div className='store-div'>
                 <h2>Store</h2>
+                <Toaster/>
                 <div>
                     <button style={{ backgroundColor: color ? "rgb(0, 171, 197)" : "grey", color: "white", fontWeight: "bold" }} onClick={() => setColor(!color)} className='btn'>Categories</button>
                     <button style={{ backgroundColor: color ? "grey" : "rgb(0, 171, 197)", color: "white", fontWeight: "bold" }} onClick={() => setColor(!color)} className='btn'>Products</button>
                 </div>
                 <div className='filter'>
                     <button onClick={() => window.location.reload()}>Refresh</button>
-                    <button>Filter</button>
+                    <button onClick={handleEdit} >Filter</button>
                     <button onClick={() => setshowPopup(true)}>Add</button>
                 </div>
                 <div>
@@ -82,21 +90,35 @@ const MyStore = () => {
                             <th>Actions</th>
                         </tr>
 
-                        {products?.map(function (ele) {
-                            return (
-                                <React.Fragment>
-                                    <tr>
-                                        <td><img style={{ width: 100 }} src={ele.avatar} alt="" /></td>
-                                        <td>{ele.title}</td>
-                                        <td>{ele.description}</td>
-                                        <td>
-                                            <button style={{ width: "50%", cursor: "pointer" }}>Edit</button>
-                                            <button onClick={() => handleDeletee(ele._id)} style={{ width: "50%", cursor: "pointer" }}>Delete</button>
-                                        </td>
-                                    </tr>
-                                </React.Fragment>
-                            );
-                        })}
+                        {
+                            isLoading ? <div className='loading-div'>
+                                <PropagateLoader
+                                    color={"rgb(0,171,197)"}
+                                    loading={isLoading}
+                                    size={25}
+                                    aria-label="Loading Spinner"
+                                    data-testid="loader"
+                                />
+                            </div> : <>
+                            {products && products?.map(function (ele, index) {
+                                return (
+                                    <React.Fragment key={index}>
+                                        <tr>
+                                            <td><img style={{ width: 100 }} src={ele.avatar} alt="" /></td>
+                                            <td>{ele.title}</td>
+                                            <td>{ele.description}</td>
+                                            <td>
+                                                <button onClick={handleEdit} style={{ width: "50%", cursor: "pointer" }}>Edit</button>
+                                                <button onClick={() => handleDeletee(ele._id)} style={{ width: "50%", cursor: "pointer" }}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    </React.Fragment>
+                                );
+                            })}
+                            </> 
+                        }
+
+                        
                     </table>
                 </div>
             </div>
@@ -110,10 +132,10 @@ const MyStore = () => {
                             <input type="text" name="title" placeholder='Enter name' value={formData.title} onChange={handleChange} />
                             <input type="text" name="description" placeholder='Enter slug' value={formData.description} onChange={handleChange} />
                             <input type="number" name="Price" placeholder='Enter price' value={formData.Price} onChange={handleChange} />
-                            <button style={{backgroundColor:"rgb(0, 171, 197)",border:"none",color:"white",fontWeight:"bold",cursor:"pointer"}} type="submit">Add</button>
+                            <button style={{ backgroundColor: "rgb(0, 171, 197)", border: "none", color: "white", fontWeight: "bold", cursor: "pointer" }} type="submit">Add</button>
                         </form>
                         <div>
-                            <button style={{ marginTop: "20px", cursor: "pointer",backgroundColor:"rgb(0, 171, 197)",border:"none",color:"white",fontWeight:"bold" }} onClick={() => setshowPopup(false)}>Cancel</button>
+                            <button style={{ marginTop: "20px", cursor: "pointer", backgroundColor: "rgb(0, 171, 197)", border: "none", color: "white", fontWeight: "bold" }} onClick={() => setshowPopup(false)}>Cancel</button>
                         </div>
                     </div>
                 </React.Fragment>

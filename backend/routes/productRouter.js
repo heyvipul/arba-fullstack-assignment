@@ -5,7 +5,11 @@ const Product = require("../models/Product");
 
 router.post('/', async (req, res) => {
   try {
-    const { avatar, title, description, Price } = req.body;
+    let { avatar, title, description, Price } = req.body;
+    
+    if (!avatar) {
+      avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-YwrVVjOv028wj9HZ_0_GUizZdQhoxB_C2Q_0yfYgA&s";
+    }
     const product = new Product({ avatar, title, description, Price });
     await product.save();
     res.status(201).json(product);

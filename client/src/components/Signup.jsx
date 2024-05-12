@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import dummy from "../assets/login-img.jpg";
 import { FaCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Signup = ({ login, setLogin }) => {
   const [userName, setUsername] = useState("");
@@ -9,6 +10,7 @@ const Signup = ({ login, setLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  
   const navigate = useNavigate();
 
   async function handleSignup(e) {
@@ -17,7 +19,7 @@ const Signup = ({ login, setLogin }) => {
       if (password !== confirmPassword) {
         return alert("Password not match!");
       }
-      const response = await fetch("https://arba-backend-1-z79g.onrender.com/register", {
+      const response = await fetch("http://localhost:8000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,17 +33,12 @@ const Signup = ({ login, setLogin }) => {
       });
       const data = await response.json();
       console.log(data);
-      localStorage.setItem("signup", JSON.stringify({
-        userName,
-        fullName,
-        email,
-        password,
-      }));
-      alert("Signup successful! Please login.");
-      navigate("/profile"); 
+      // alert("Signup successful! Please login.");
+      toast.success("Signup successful! Please login.");
+      
     } catch (error) {
       console.log(error);
-      alert("Signup failed. Please try again.");
+      toast.error("Signup failed. Please try again.");
     }
   }
 
@@ -85,6 +82,7 @@ const Signup = ({ login, setLogin }) => {
           />
           <button onClick={handleSignup}>Register</button>
           <p>Already have an account? <span onClick={() => setLogin(!login)} style={{ color: "rgb(0,171,197)", cursor: "pointer" }}>Login</span></p>
+          <Toaster />
         </div>
       </div>
     </>

@@ -5,17 +5,25 @@ const initialState = {
     products : []
 }
 
-export const productReducer = (state = initialState,{type,payload}) =>{
-    switch (type){
-        case GET_PRODUCT_REQUEST : return {
-            ...state,isLoading : true
-        }
-        case GET_PRODUCT_SUCCESS : return {
-            ...state, isLoading : false, products : payload
-        }
-        case DELETE_PRODUCT : return {
-            ...state,products : payload
-        }
-        default : return state
+export const productReducer = (state = initialState, { type, payload }) => {
+    switch (type) {
+        case GET_PRODUCT_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case GET_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                products: payload
+            };
+        case DELETE_PRODUCT:
+            return {
+                ...state,
+                products: state.products.filter(product => product._id !== payload._id)
+            };
+        default:
+            return state;
     }
-}
+};
