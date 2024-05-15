@@ -1,7 +1,8 @@
 <h1 align="center" id="title">Full Stack Arba-Assignment</h1>
 
-### username : vipul_girhe
-### password : vipul123 
+### username : adityagirhe
+### username : aditya@gmail.com
+### password : aditya@123 
 #### * password may not work if someone changed it during testing
 
 <h2>🚀 Demo</h2>
