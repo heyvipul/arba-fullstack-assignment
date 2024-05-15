@@ -35,6 +35,7 @@ const Signup = ({ login, setLogin }) => {
       console.log(data);
       // alert("Signup successful! Please login.");
       toast.success("Signup successful! Please login.");
+      setLogin(!login)
       
     } catch (error) {
       console.log(error);

@@ -80,71 +80,81 @@ const Home = () => {
     })
   }
 
+  const carouselArray = [
+    { image: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/1fe2baf68811b778.jpg?q=20" },
+    { image: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/5483df11b3fc9f0b.jpg?q=20" },
+    { image: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/c7d5963c1f077d41.jpg?q=20" },
+    { image: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/f6720ba6b92b67fb.jpg?q=20" },
+    { image: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/40b5634b3bc3bff2.jpg?q=20" }
+  ]
 
   return (
     <>
       <div>
-        <Carousel
-          containerProps={{
-            style: {
-              width: "80%",
-              margin: "auto",
-              justifyContent: "space-between",
-              userSelect: "none",
-            }
+      <Carousel
+      containerProps={{
+        style: {
+          width: "80%",
+          height : 500,
+          margin: "auto",
+          justifyContent: "space-between",
+          userSelect: "none",
+        }
+      }}
+      preventScrollOnSwipe
+      swipeThreshold={60}
+      activeSlideIndex={activeSlide}
+      activeSlideProps={{
+        style: {
+          border: "30px solid white", 
+        }
+      }}
+      onRequestChange={setActiveSlide}
+      dotsNav={{
+        show: true,
+        itemBtnProps: {
+          style: {
+            height: 16,
+            width: 16,
+            borderRadius: "50%",
+            border: 0,
+            cursor: "pointer"
+          }
+        },
+        activeItemBtnProps: {
+          style: {
+            height: 16,
+            width: 16,
+            borderRadius: "50%",
+            border: 0,
+            background: "rgb(0,171,197)",
+            marginRight: 5,
+            marginLeft: 5
+          }
+        }
+      }}
+      itemsToShow={2}
+      speed={400}
+      centerMode
+    >
+      {carouselArray.map((item, index) => (
+        <div
+          style={{
+            background: `url(${item.image}) no-repeat center center`,
+            backgroundSize: "cover",
+            objectFit : "cover",
+            width: 900,
+            height: 500,
+            border: activeSlide === index ? "30px solid white" : "none", 
+            textAlign: "center",
+            lineHeight: "240px",
+            boxSizing: "border-box"
           }}
-          preventScrollOnSwipe
-          swipeTreshold={60}
-          activeSlideIndex={activeSlide}
-          activeSlideProps={{
-            style: {
-              background: "rgb(0,171,197)"
-            }
-          }}
-          onRequestChange={setActiveSlide}
-          dotsNav={{
-            show: true,
-            itemBtnProps: {
-              style: {
-                height: 16,
-                width: 16,
-                borderRadius: "50%",
-                border: 0,
-                cursor: "pointer"
-              }
-            },
-            activeItemBtnProps: {
-              style: {
-                height: 16,
-                width: 16,
-                borderRadius: "50%",
-                border: 0,
-                background: "rgb(0,171,197)",
-                marginRight: 5,
-                marginLeft: 5
-              }
-            }
-          }}
-          itemsToShow={2}
-          speed={400}
-          centerMode
+          key={index}
         >
-          {Array.from({ length: 5 }).map((item, index) => (
-            <div
-              style={{
-                background: "rgb(0,171,197)",
-                width: 900,
-                height: 500,
-                border: "30px solid white",
-                textAlign: "center",
-                lineHeight: "240px",
-                boxSizing: "border-box"
-              }}
-              key={index}
-            >
-            </div>
-          ))}
-        </Carousel>
+        </div>
+      ))}
+    </Carousel>
       </div>
 
       {showDialog && (
@@ -174,36 +184,36 @@ const Home = () => {
 
       {
         isLoading ? <div className='loading-div'>
-        <PropagateLoader
-          color={"rgb(0,171,197)"}
-          loading={isLoading}
-          size={25}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+          <PropagateLoader
+            color={"rgb(0,171,197)"}
+            loading={isLoading}
+            size={25}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </div> : <div className='products-div'>
-        {products?.map(function (ele, index) {
-          return <div key={index}>
-            <img src={ele.avatar} alt="" />
-            <div>
-              <h4 style={{ marginBottom: "-12px" }}>{ele.title}</h4>
-              <p style={{ color: "grey", marginBottom: "-10px" }}>{ele.description}</p>
-              <p style={{ color: "rgb(0, 171, 197)", fontWeight: "bold" }}>RS. {ele.Price}</p>
-              {cart[index] ? (
-                <div>
+          {products?.map(function (ele, index) {
+            return <div key={index}>
+              <img src={ele.avatar} alt="" />
+              <div>
+                <h4 style={{ marginBottom: "-12px" }}>{ele.title}</h4>
+                <p style={{ color: "grey", marginBottom: "-10px" }}>{ele.description}</p>
+                <p style={{ color: "rgb(0, 171, 197)", fontWeight: "bold" }}>RS. {ele.Price}</p>
+                {cart[index] ? (
+                  <div>
 
-                  <button><span style={{ paddingRight: "50px" }} onClick={() => removeFromCart(ele.id, index)}>-</span>{cart[index]}<span style={{ paddingLeft: "50px" }} onClick={() => addToCart(index)}>+</span></button>
-                </div>
-              ) : (
-                <button onClick={() => addToCart(ele, index)}>Add to Cart</button>
-              )}
+                    <button><span style={{ paddingRight: "50px" }} onClick={() => removeFromCart(ele.id, index)}>-</span>{cart[index]}<span style={{ paddingLeft: "50px" }} onClick={() => addToCart(index)}>+</span></button>
+                  </div>
+                ) : (
+                  <button onClick={() => addToCart(ele, index)}>Add to Cart</button>
+                )}
+              </div>
             </div>
-          </div>
-        })}
-      </div>
+          })}
+        </div>
       }
 
-  
+
       <div style={{
         display: "flex",
         width: "65%",

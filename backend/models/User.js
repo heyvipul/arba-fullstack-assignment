@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-YwrVVjOv028wj9HZ_0_GUizZdQhoxB_C2Q_0yfYgA&s"
+    },
+    forgetPasswordToken: {
+        type : String
     }
 });
 

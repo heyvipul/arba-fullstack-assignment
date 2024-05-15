@@ -23,8 +23,10 @@ export const handleLogin = ({ userName, password}) => async (dispatch) => {
       localStorage.setItem("signup", JSON.stringify({
         userName : userName,
         email : data.userDoc.email,
-        id : data.userDoc._id
+        id : data.userDoc._id,
+        avatar : data.userDoc.avatar
       }));
+      // console.log(data);
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data.token });
       alert("Login successfull")
 

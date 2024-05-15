@@ -5,10 +5,13 @@ const Category = require('../models/Category');
 
 router.post('/', async (req, res) => {
   try {
-    const category = await Category.create(req.body);
-    res.status(201).json(category);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    const { name, slug, avatar, owner } = req.body;
+
+    let data = await Category_Model({ name, slug, avatar, owner });
+    await data.save();
+    res.status(201).send({ msg: "New category has been created", data: data });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
   }
 });
 
@@ -25,7 +28,7 @@ router.patch('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.findAll();
     res.json(categories);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -33,17 +36,20 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/:id', getCategory, (req, res) => {
-  res.json(res.category);
-});
-
-
 router.delete('/:id', getCategory, async (req, res) => {
+  const { id } = req.params;
   try {
-    await res.category.remove();
-    res.json({ message: 'Category deleted' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const data = await Category.findOne({ _id: id });
+    if (!data) {
+      return res.status(404).send({ error: "Category not found" });
+    }
+    if (data.userID !== req.body.userID) {
+      return res.status(403).send({ error: "Not authorized" });
+    }
+    await Category.findByIdAndDelete(id);
+    res.status(200).send({ msg: `Category has been deleted` });
+  } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
   }
 });
 
