@@ -1,7 +1,8 @@
 <h1 align="center" id="title">Full Stack Arba-Assignment</h1>
 
-### username : heyvipul
-### password : heyvipul 
+### username : vipul_girhe
+### password : vipul123 
+#### * password may not work if someone changed it during testing
 
 <h2>🚀 Demo</h2>
 https://drive.google.com/file/d/1adbCYH83KlqhJ8-AeZe7eNDGFIm24bpC/view?usp=sharing
@@ -23,7 +24,8 @@ https://drive.google.com/file/d/1adbCYH83KlqhJ8-AeZe7eNDGFIm24bpC/view?usp=shari
 
 ![image](https://github.com/heyvipul/arba-fullstack-assignment/assets/131906819/fd11e8e9-3c2c-4f1b-b070-3ff27b9846e3)
 
-![image](https://github.com/heyvipul/arba-fullstack-assignment/assets/131906819/b5174e7e-d0e4-4eff-9de0-ec65a1e77e75)
+![image](https://github.com/heyvipul/arba-fullstack-assignment/assets/131906819/1872bb73-e988-42e2-aac5-13a801419332)
+
 
 ![image](https://github.com/heyvipul/arba-fullstack-assignment/assets/131906819/69c18dfb-cb2e-444b-968c-a9efffbb8513)
 
