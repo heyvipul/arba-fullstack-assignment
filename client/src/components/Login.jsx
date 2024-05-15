@@ -38,7 +38,7 @@ const Login = ({ login, setLogin }) => {
   async function generateToken(e) {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/user", {
+      const response = await fetch("https://arba-backend-j9r7.onrender.com/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +71,10 @@ const Login = ({ login, setLogin }) => {
   async function handleforgetPassword(e){
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/forget-password",{
+      if (newPassword !== confirmNewPassword) {
+        return toast.error("Password not match!");
+      }
+      const response = await fetch("https://arba-backend-j9r7.onrender.com/forget-password",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",

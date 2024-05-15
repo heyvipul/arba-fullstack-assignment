@@ -7,7 +7,7 @@ export const USER_SIGNUP = "USER_SIGNUP"
 
 export const handleLogin = ({ userName, password}) => async (dispatch) => {
   try {
-    const response = await fetch("https://arba-backend-1-z79g.onrender.com/login", {
+    const response = await fetch("https://arba-backend-j9r7.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export const handleLogin = ({ userName, password}) => async (dispatch) => {
 
 export const handleSignup = ({ fullName, userName, email, password }) => async (dispatch) => {
   try {
-    const response = await fetch(`https://arba-backend-1-z79g.onrender.com/register`, {
+    const response = await fetch(`https://arba-backend-j9r7.onrender.com/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

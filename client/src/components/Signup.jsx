@@ -19,7 +19,7 @@ const Signup = ({ login, setLogin }) => {
       if (password !== confirmPassword) {
         return alert("Password not match!");
       }
-      const response = await fetch("https://arba-backend-1-z79g.onrender.com/register", {
+      const response = await fetch("https://arba-backend-j9r7.onrender.com/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

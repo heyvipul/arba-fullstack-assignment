@@ -55,7 +55,7 @@ const Profile = () => {
     formData.append('userId', id); 
 
     try {
-      const response = await fetch('http://localhost:8000/update-avatar', {
+      const response = await fetch('https://arba-backend-j9r7.onrender.com/update-avatar', {
         method: 'POST',
         body: formData,
       });
@@ -83,7 +83,7 @@ const Profile = () => {
       if (newPassword !== confirmNewPassword || newPassword === "" || currentPassword === "") {
         return toast.error("Password not match!");
       }
-      const response = await fetch(`https://arba-backend-1-z79g.onrender.com/user/${id}`, {
+      const response = await fetch(`https://arba-backend-j9r7.onrender.com/user/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +111,7 @@ const Profile = () => {
         <Toaster />
         <div className='profile-div'>
           <img
-            src={avatarNew ? `http://localhost:8000${avatarNew}` : "https://cdn-icons-png.freepik.com/256/149/149071.png?semt=ais_hybrid"}
+            src={avatarNew ? `https://arba-backend-j9r7.onrender.com${avatarNew}` : "https://cdn-icons-png.freepik.com/256/149/149071.png?semt=ais_hybrid"}
             alt="avatar.img" />
           <h4 style={{ marginBottom: "-15px" }}>{userName || "User"}</h4>
           <p>{email || "user@gmail.com"}</p>

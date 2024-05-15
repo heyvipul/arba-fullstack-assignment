@@ -8,7 +8,7 @@ export const getProduct = () => async(dispatch) =>{
     try {
 
         dispatch({type : GET_PRODUCT_REQUEST})
-        const response = await fetch("https://arba-backend-1-z79g.onrender.com/products")
+        const response = await fetch("https://arba-backend-j9r7.onrender.com/products")
         const data = await response.json();
         dispatch({type : GET_PRODUCT_SUCCESS,payload : data})
   
@@ -20,7 +20,7 @@ export const getProduct = () => async(dispatch) =>{
 
 export const handleDelete = (id) => async (dispatch) => {
     try {
-        const response = await fetch(`https://arba-backend-1-z79g.onrender.com/products/${id}`, {
+        const response = await fetch(`https://arba-backend-j9r7.onrender.com/products/${id}`, {
             method: 'DELETE'
         });
         if (response.ok) {
